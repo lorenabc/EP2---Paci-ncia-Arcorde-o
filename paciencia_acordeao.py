@@ -79,7 +79,7 @@ print('\n---------------------------------')
 print('\nNesse jogo você pode apenas empilhar:\nUma carta sobre a carta imediantamente anterior \nOu empilhar sobre a terceira carta anterior')
 print('\nPara isso acontecer, as cartas, tanto a selecionada quanto a primeira e/ou terceira carta anterior, \nDevem ou ter o mesmo naipe ou mesmo valor!')
 print('\nUm pouco complexo, mas você vai pegar o jeito.\n\n')
-print('\t\tBom jogo!')
+print('\t\tBom jogo!\n')
 
 jogo = False
 iniciar = False
@@ -97,27 +97,45 @@ baralho_inicial = cria_baralho()
 while jogo:
     contador = 1
     tamanho = range(len(baralho_inicial))
+
     for carta in baralho_inicial:
         print('{}. {}'.format(contador, carta))
         contador += 1
 
     contador = 1
-    numero = int(input('escolha uma carta: '))
+    numero = int(input('\nEscolha uma carta entre 1 e {}: '.format(max(tamanho)+1)))
     posicao = (numero-1)
+
     while posicao not in tamanho:
-        numero = int(input('carta invalida. escolha uma carta entre 1 e {}: '.format(max(tamanho)+1)))
+        numero = int(input('Carta invalida. Escolha uma carta entre 1 e {}: '.format(max(tamanho)+1)))
         posicao = (numero-1)
-    print(posicao)
-    print(baralho_inicial[posicao])
+
     movimento = lista_movimentos_possiveis(baralho_inicial, posicao)
-    print(movimento)
-    if movimento == [1]:
-        print('anterior') 
+
+    if movimento == []:
+        print('Não há movimentos possíveis para a carta {}.\n'.format(baralho_inicial[posicao]))
+
+    elif movimento == [1]:
+        empilha(baralho_inicial, posicao, posicao-1)
+
     elif movimento == [3]:
-        print('terceira anterior') 
+        empilha(baralho_inicial, posicao, posicao-3) 
+
     elif movimento == [1,3]:
-        print('as duas')  
+        print('Quer empilhar {} sobre qual carta?'.format(baralho_inicial[posicao]))
+        print('\n 1. {}'.format(baralho_inicial[posicao-1]))
+        print(' 2. {}'.format(baralho_inicial[posicao-3]))
+        escolha = int(input(''))
+        if escolha == 1:
+            empilha(baralho_inicial, posicao, posicao-1)
+        elif escolha == 2:
+            empilha(baralho_inicial, posicao, posicao-3)
+        
     print('digite "fechar" para encerrar jogo:')
     fechar = input('')
     if fechar == 'fechar':
         jogo = False
+        
+    elif fechar != 'fechar':
+        jogo = True
+        print('\nO baralho está assim:')
