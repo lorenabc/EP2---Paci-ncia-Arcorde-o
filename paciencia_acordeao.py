@@ -1,18 +1,18 @@
 import random
 def cria_baralho():
-    baralho = ['10♠','5♥','8♦','A♣',
-    '9♠','Q♥','10♦','7♣',
-    '6♠','6♥','Q♦','8♣',
-    'J♠','4♥','4♦','4♣',
-    '8♠','8♥','3♦','6♣',
-    'A♠','3♥','K♦','10♣',
-    '4♠','K♥','J♦','Q♣',
-    '3♠','J♥','A♦','5♣',
-    'K♠','A♥','6♦','9♣',
-    '7♠','2♥','9♦','K♣',
-    '5♠','9♥','2♦','2♣',
-    '2♠','7♥','5♦','J♣',
-    'Q♠','10♥','7♦','3♣']
+    baralho = ['K♠', 'Q♠', 'J♠', '10♠', 
+    '9♠', '8♠', '7♠', '6♠', 
+    '5♠', '4♠', '3♠', '2♠', 
+    'A♠', 'K♥', 'Q♥', 'J♥', 
+    '10♥', '9♥', '8♥', '7♥',
+    '6♥', '5♥', '4♥', '3♥', 
+    '2♥', 'A♥', 'K♦', 'Q♦', 
+    'J♦', '10♦', '9♦', '8♦',
+    '7♦', '6♦', '5♦', '4♦', 
+    '3♦', '2♦', 'A♦', 'K♣', 
+    'Q♣', 'J♣', '10♣', '9♣',
+    '8♣', '7♣', '6♣', '5♣', 
+    '4♣', '3♣', '2♣', 'A♣']
 
     random.shuffle(baralho)
     return baralho 
@@ -105,7 +105,9 @@ while jogo:
     contador = 1
     numero = int(input('\nEscolha uma carta entre 1 e {}: '.format(max(tamanho)+1)))
     posicao = (numero-1)
-
+    posicao1 = (posicao-1)
+    posicao3 = (posicao-3)
+    
     while posicao not in tamanho:
         numero = int(input('Carta invalida. Escolha uma carta entre 1 e {}: '.format(max(tamanho)+1)))
         posicao = (numero-1)
@@ -116,20 +118,20 @@ while jogo:
         print('Não há movimentos possíveis para a carta {}.\n'.format(baralho_inicial[posicao]))
 
     elif movimento == [1]:
-        empilha(baralho_inicial, posicao, posicao-1)
+        empilha(baralho_inicial, posicao, posicao1)
 
     elif movimento == [3]:
-        empilha(baralho_inicial, posicao, posicao-3) 
+        empilha(baralho_inicial, posicao, posicao3) 
 
     elif movimento == [1,3]:
         print('Quer empilhar {} sobre qual carta?'.format(baralho_inicial[posicao]))
-        print('\n 1. {}'.format(baralho_inicial[posicao-1]))
-        print(' 2. {}'.format(baralho_inicial[posicao-3]))
+        print('\n 1. {}'.format(baralho_inicial[posicao1]))
+        print(' 2. {}'.format(baralho_inicial[posicao3]))
         escolha = int(input(''))
         if escolha == 1:
-            empilha(baralho_inicial, posicao, posicao-1)
+            empilha(baralho_inicial, posicao, posicao1)
         elif escolha == 2:
-            empilha(baralho_inicial, posicao, posicao-3)
+            empilha(baralho_inicial, posicao, posicao3)
         
     print('digite "fechar" para encerrar jogo:')
     fechar = input('')
@@ -139,3 +141,10 @@ while jogo:
     elif fechar != 'fechar':
         jogo = True
         print('\nO baralho está assim:')
+
+    # verificacao = possui_movimentos_possiveis(baralho_inicial)
+    # if verificacao != True:
+    #     jogo = False
+
+print('Não há mais movimentos possíveis.')
+print('Você perdeu!')
